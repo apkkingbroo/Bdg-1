@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Dialog - Glass UI</title>
+  <style>
+    /* General Styling */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://source.unsplash.com/1600x900/?nature,abstract') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Floating Open Button */
+    #open {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 87, 34, 0.8);
+      color: white;
+      border: 2px solid white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #open:hover {
+      background: rgba(255, 87, 34, 1);
+      transform: scale(1.1);
+    }
+
+    /* Dialog Box */
+    #dialogBox {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      display: none;
+      width: 80%;
+      max-width: 400px;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    #dialogBox.show {
+      display: block;
+    }
+
+    /* Close Button */
+    #closeBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Link Styling */
+    #telegramLink {
+      display: inline-block;
+      margin-top: 10px;
+      color: #00bcd4;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid #00bcd4;
+      padding: 8px 15px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    #telegramLink:hover {
+      background: #00bcd4;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Period, Timer, and Result Styling */
+    p {
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      margin: 10px 0;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .big {
+      color: green;
+      font-weight: bold;
+    }
+
+    .small {
+      color: red;
+      font-weight: bold;
+    }
+
+    .popup {
+      animation: popup 0.5s ease-in-out;
+    }
+
+    /* Animations */
+    @keyframes popup {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -55%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Floating Button -->
+  <button id="open">Open Hack</button>
+
+  <!-- Dialog Box -->
+  <div id="dialogBox">
+    <button id="closeBtn">×</button>
+    <p>Join my Telegram channel:</p>
+    <a id="telegramLink" href="https://telegram.me/apkmodderking" target="_blank">Join Now</a>
+    <p>New account isi hack se bna krke 1000 deposit krein tbhi hack work kregi or website se connect hogi.</p>
+    <p>Period Number: <span id="periodNumber"></span></p>
+    <p>Timer: <span id="timerText"></span></p>
+    <p>Result: <span id="resultText"></span></p>
+  </div>
+
+  <script>
+    let open = document.getElementById("open");
+    let dialogBox = document.getElementById("dialogBox");
+    let closeBtn = document.getElementById("closeBtn");
+    let periodNumber = document.getElementById("periodNumber");
+    let timerText = document.getElementById("timerText");
+    let resultText = document.getElementById("resultText");
+
+    // Open and Close Dialog
+    open.onclick = () => { dialogBox.classList.add("show"); };
+    closeBtn.onclick = () => { dialogBox.classList.remove("show"); };
+
+    // Function to Update Timer and Period Number
+    function updatePeriodAndTimer() {
+      let now = new Date();
+      let year = now.getUTCFullYear();
+      let month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      let day = String(now.getUTCDate()).padStart(2, '0');
+      let hours = now.getUTCHours();
+      let minutes = now.getUTCMinutes();
+      let totalMinutes = hours * 60 + minutes;
+
+      let periodNum = `${year}${month}${day}1000${10001 + totalMinutes}`;
+      periodNumber.innerText = periodNum;
+
+      let lastTwoDigits = periodNum.slice(-2);
+      let sum = [...lastTwoDigits].reduce((a, b) => a + parseInt(b), 0);
+      if (sum > 9) sum = [...String(sum)].reduce((a, b) => a + parseInt(b), 0);
+
+      let result = sum >= 5 ? "BIG" : "SMALL";
+      resultText.innerHTML = `<span class="${sum >= 5 ? 'big' : 'small'} popup">${result}</span>`;
+      resultText.classList.add("show");
+
+      let seconds = now.getUTCSeconds();
+      let remainingSeconds = 60 - seconds;
+      timerText.innerText = `00:${String(remainingSeconds).padStart(2, '0')}`;
+
+      setTimeout(() => { resultText.classList.remove("show"); }, 500);
+    }
+
+    // Update Every Second
+    setInterval(updatePeriodAndTimer, 1000);
+    updatePeriodAndTimer();
+  </script>
+
+</body>
+</html>
